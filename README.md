@@ -30,6 +30,7 @@ samples, guidance on mobile development, and a full API reference.
 
 The project follows a modular structure to ensure scalability and maintainability:
 
+```bash
 lib/
 ├── core/
 │ ├── constants/
@@ -54,6 +55,7 @@ lib/
 │ ├── domain/
 │ └── presentation/
 └── main.dart
+```
 
 
 ## Clean Architecture
