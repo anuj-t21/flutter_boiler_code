@@ -9,6 +9,7 @@ A new Flutter project.
 - [Clean Architecture](#clean-architecture)
 - [Routing System](#routing-system)
 - [State Management](#state-management)
+- [Network Service](#network-service)
 - [Dependencies](#dependencies)
 - [Contributing](#contributing)
 - [License](#license)
@@ -93,12 +94,61 @@ The project is structured following the principles of Clean Architecture, which 
 
 ## Routing System
 
-The routing system is implemented using the `auto_route` package. We use named routes for better readability and maintainability.
+Our project utilizes a robust routing system, implemented with the `auto_route` package, to manage navigation throughout the application. This system allows for the declaration of routes in a centralized manner, enhancing readability and maintainability.
+
+### Key Features
+
+- **Declarative Routing**: Routes are declared using annotations, making it easy to visualize the navigation flow of the application.
+- **Auto-generation of Route Definitions**: The `auto_route` package generates code for routing based on the annotations provided, reducing boilerplate and potential human error.
+- **Guards**: Route guards are used to control access to certain pages based on conditions such as authentication status.
+
+### Adding New Routes
+
+To add a new route, you should annotate your page with `@AutoRoute` and then run the following command to generate the routing code:
+
+```bash
+dart run build_runner build
+```
+
+This command compiles the annotations into actual Dart code that implements the routing logic, ensuring that your routes are kept up to date with any changes you make.
+
+### Routing Service Overview
+
+The routing service in our project, located within the `lib/core/router` directory, is structured to provide a comprehensive solution for navigation and route management. Here's a detailed explanation of its components:
+
+- **AppRouter (`lib/core/router/data/app_router.dart`)**: The central point of the routing system, where routes are defined and configured. It includes the setup for auto-generated routes and guards.
+
+- **Guards (`lib/core/router/data/utils/guards`)**: Guards are implemented to control navigation based on certain conditions. For example, `AuthGuard` checks for user authentication, and `SplashGuard` ensures that initialization processes are completed before proceeding.
+
+- **Route Paths (`lib/core/router/data/utils/path/route_path.dart`)**: This file defines constants for route paths, making it easier to refer to specific routes throughout the application.
+
+- **AutoRoute Configurations**: The `@AutoRouterConfig` annotation in `AppRouter` specifies global configurations for the routing system, such as the replacement of 'Page,Route' in route names.
+
+- **Route Observers (`lib/core/router/data/utils/observer.dart`)**: Observers are used to listen to route changes, allowing for actions to be performed on route transitions, such as logging.
+
+### Implementation Details
+
+The routing system is designed to be flexible and extensible, supporting complex navigation scenarios, including nested routes and modal dialogs. By centralizing the route definitions and utilizing route guards, the system provides a secure and maintainable approach to managing navigation within the Flutter application.
+
+This routing system, combined with the `auto_route` package, provides a powerful and efficient way to manage navigation in your Flutter application.
 
 ## State Management
 
 We use the `flutter_bloc` package for state management. It allows us to manage the state efficiently and provides a clean way to separate business logic from UI code.
 
+## Network Service
+
+In our project, we have implemented a comprehensive network service layer using the `dio` package to facilitate network requests. This layer is designed to handle various HTTP methods, including GET, POST, PUT, PATCH, and DELETE, through a unified interface. 
+
+Key features of our network service include:
+
+- **Singleton Pattern**: Ensures a single instance of the `NetworkService` class throughout the application, providing a centralized point for network operations.
+- **Interceptors**: Utilize `Dio` interceptors for authentication, logging, and error handling to streamline request processing and response handling.
+  - **AuthInterceptor**: Manages the injection of authorization tokens into request headers, facilitating secure access to protected endpoints. The implementation is designed to support token refresh mechanisms transparently. For handling authorization tokens, we have provided a template in the form of commented code within the `AuthInterceptor` class. This template can be customized and utilized to meet specific authentication requirements.
+  - **Logging**: Captures and logs detailed request and response information, aiding in debugging and monitoring network activity.
+  - **Error Handling**: Custom error interceptors categorize network errors into specific exceptions, such as `BadRequestException`, `UnauthorizedException`, and `TimeOutException`, among others, allowing for granular error management.
+
+This architecture not only simplifies the process of making network requests but also enhances maintainability and scalability by segregating concerns and centralizing network-related operations.
 
 ## Dependencies
 
