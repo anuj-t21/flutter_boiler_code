@@ -26,6 +26,15 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+### Initial Reference
+
+To help you get started quickly, we have included the following:
+
+- **Authentication Page**: This page allows users to sign in and sign up. It includes complete data and domain layer functionalities, such as user authentication and session management.
+- **Home Page**: This page serves as the main landing page after a user successfully logs in.
+
+These initial pages provide a foundation for building out the rest of your application, demonstrating how to structure your code and implement core features.
+
 ## Project Structure
 
 The project follows a modular structure to ensure scalability and maintainability:
