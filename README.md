@@ -10,6 +10,7 @@ A new Flutter project.
 - [Routing System](#routing-system)
 - [State Management](#state-management)
 - [Network Service](#network-service)
+- [Environment Configuration](#environment-configuration)
 - [Dependencies](#dependencies)
 - [Contributing](#contributing)
 - [License](#license)
@@ -150,6 +151,23 @@ Key features of our network service include:
 
 This architecture not only simplifies the process of making network requests but also enhances maintainability and scalability by segregating concerns and centralizing network-related operations.
 
+## Environment Configuration with `flutter_dotenv`
+
+In our project, we utilize the `flutter_dotenv` package to manage environment variables, which is crucial for handling sensitive information such as secret keys. This package allows us to load environment variables from a `.env` file, ensuring that sensitive data is not hardcoded into the source code, thus enhancing security and flexibility.
+
+### How We Use `flutter_dotenv`
+
+The `flutter_dotenv` package is integrated into our environment management system, specifically within the `app_environment.dart` and `app_environment_keys.dart` files. Here's a brief overview of how it is used:
+
+- **Loading Environment Variables**: In `app_environment.dart`, we use `flutter_dotenv` to load environment variables from different configuration files based on the build mode (development or production). This is done through the `dotenv.load()` method, which reads the specified `.env` file and makes the variables available throughout the application.
+
+- **Accessing Secret Keys**: The loaded environment variables are accessed via the `_AppEnvironmentKeys` class in `app_environment_keys.dart`. This class provides getter methods for various configuration keys, including secret keys like the Supabase URL and anonymous key. By encapsulating these keys within a class, we ensure that they are accessed in a controlled manner, reducing the risk of accidental exposure.
+
+- **Configuration Management**: The `AppEnvironment` class in `app_environment.dart` is responsible for initializing and managing the environment configurations. It loads the appropriate configuration files and merges them with default settings, allowing for a flexible and robust configuration management system.
+
+By using `flutter_dotenv`, we maintain a clean separation between code and configuration, allowing for easy updates to environment-specific settings without modifying the source code. This approach not only secures sensitive information but also simplifies the process of managing different environments (e.g., development, production) in a Flutter application.
+
+
 ## Dependencies
 
 The project uses the following dependencies:
@@ -157,11 +175,11 @@ The project uses the following dependencies:
 - `auto_route`: For routing.
 - `dartz`: For functional programming constructs.
 - `flutter_bloc`: For state management.
+- `flutter_dotenv`: For loading environment variables from a .env file.
 - `freezed`: For immutable data classes and union types.
 - `get_it`: For dependency injection.
 - `json_serializable`: For JSON serialization.
 - `supabase_flutter`: For backend services.
-
 
 ## Contributing
 
