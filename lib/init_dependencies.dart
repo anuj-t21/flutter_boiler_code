@@ -1,4 +1,4 @@
-import 'package:flutter_boiler_code/core/secrets/app_secrets.dart';
+import 'package:flutter_boiler_code/core/environment/app_environment.dart';
 import 'package:flutter_boiler_code/features/auth/data/datasources/auth_remote_data_source.dart';
 import 'package:flutter_boiler_code/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:flutter_boiler_code/features/auth/domain/repository/auth_repository.dart';
@@ -12,16 +12,21 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 final serviceLocator = GetIt.instance;
 Future<void> initDependencies() async {
+  await _initEnvironmentKeys();
   _initAuth();
   //Init your Other Services Here
   final supabase = await Supabase.initialize(
-    url: AppSecrets.supabaseUrl,
-    anonKey: AppSecrets.supabaseAnon,
+    url: AppEnvironment.config.supabase.url,
+    anonKey: AppEnvironment.config.supabase.anonKey,
   );
   serviceLocator.registerLazySingleton(() => supabase.client);
 
   //Core
   serviceLocator.registerLazySingleton(() => AppUserCubit());
+}
+
+_initEnvironmentKeys() async {
+  await AppEnvironment.initialize();
 }
 
 void _initAuth() {
